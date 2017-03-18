@@ -10,9 +10,25 @@
 class Plotter{
     public:
         Plotter();
-        void addAxisX( int pinDir, int pinStep, int pinM0, int pinM1 );
+        void addToolAxis( int pinDir, int pinStep, int pinM0, int pinM1,
+            int pinLimit0, int pinLimit1 );
+        void addTableAxis( int pinDir, int pinStep, int pinM0, int pinM1,
+            int pinLimit0, int pinLimit1 );
+        int setMicroStep( unsigned char step );
+        int setMaxMicroStep( unsigned char step );
+        void setLimitDist( int dist );
+        void setTimeStep( int time );
+        void init();
+        void update();
     private:
-        int _pin;
+        int pinToolDir, pinToolStep, pinToolM0, pinToolM1;
+        int pinTableDir, pinTableStep, pinTableM0, pinTableM1;
+        int pinToolLimit0, pinToolLimit1;
+        int pinTableLimit0, pinTableLimit1;
+        int microStep;
+        int maxMicroStep;
+        int limitDelay;
+        int timeStep;
 };
 
 #endif
