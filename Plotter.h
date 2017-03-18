@@ -14,21 +14,29 @@ class Plotter{
             int pinLimit0, int pinLimit1 );
         void addTableAxis( int pinDir, int pinStep, int pinM0, int pinM1,
             int pinLimit0, int pinLimit1 );
-        int setMicroStep( unsigned char step );
-        int setMaxMicroStep( unsigned char step );
+
+        void setMicroStep( unsigned char step );
+        void setMaxMicroStep( unsigned char step );
         void setLimitDist( int dist );
         void setTimeStep( int time );
-        void init();
+
+        char getMicroStep();
+        char getMaxMicroStep();
+        char getLimitDist();
+        char getTimeStep();
+
         void update();
     private:
-        int pinToolDir, pinToolStep, pinToolM0, pinToolM1;
-        int pinTableDir, pinTableStep, pinTableM0, pinTableM1;
-        int pinToolLimit0, pinToolLimit1;
-        int pinTableLimit0, pinTableLimit1;
-        int microStep;
-        int maxMicroStep;
-        int limitDelay;
-        int timeStep;
+        char pinToolDir, pinToolStep, pinToolM0, pinToolM1;
+        char pinTableDir, pinTableStep, pinTableM0, pinTableM1;
+        char pinToolLimit0, pinToolLimit1;
+        char pinTableLimit0, pinTableLimit1;
+        char microStep;
+        char maxMicroStep;
+        int limitDist;
+        unsigned long timeStep;
+        unsigned long time;
+        unsigned long lastTimeStep;
 };
 
 #endif

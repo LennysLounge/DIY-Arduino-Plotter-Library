@@ -7,6 +7,23 @@
 
 Plotter::Plotter(){
     maxMicroStep = 32;
+    time = micros();;
+    timeStep = 1000000;
+}
+void Plotter::update(){
+    unsigned long microseconds = micros();
+    if( time+timeStep < microseconds ){
+        Serial.println( microseconds - time );
+        time = microseconds;
+
+        if( Serial.available() ){
+            Serial.println( Serial.read() );
+        }
+
+
+
+
+    }
 }
 void Plotter::addToolAxis( int pinDir, int pinStep, int pinM0, int pinM1,
 int pinLimit0, int pinLimit1 ){
@@ -17,7 +34,6 @@ int pinLimit0, int pinLimit1 ){
     pinToolM1 = pinM1;
     pinToolLimit0 = pinLimit0;
     pinToolLimit1 = pinLimit1;
-    //TODO:this
 }
 void Plotter::addTableAxis( int pinDir, int pinStep, int pinM0, int pinM1,
 int pinLimit0, int pinLimit1 ){
@@ -28,26 +44,32 @@ int pinLimit0, int pinLimit1 ){
     pinTableM1 = pinM1;
     pinTableLimit0 = pinLimit0;
     pinTableLimit1 = pinLimit1;
-    //TODO:this
 }
-int Plotter::setMaxMicroStep( unsigned char step ){
+void Plotter::setMaxMicroStep( unsigned char step ){
     maxMicroStep = 1;
-    while( step > 0 ){
-        step >>= 1;
-        maxMicroStep <<= 1;
-    }
-    maxMicroStep>>=1;
+    for(; step>1 ; step>>=1, maxMicroStep<<=1 );
+    if( microStep > maxMicroStep ) microStep = maxMicroStep;
+}
+char Plotter::getMaxMicroStep(){
     return maxMicroStep;
 }
-int Plotter::setMicroStep( unsigned char step ){
+void Plotter::setMicroStep( unsigned char step ){
     microStep = 1;
-    while( step > 0 ){
-        step >>= 1;
-        microStep <<= 1;
-    }
-    microStep>>=1;
+    for(; step>1 ; step>>=1, microStep<<=1 );
     if( microStep > maxMicroStep ) microStep = maxMicroStep;
+}
+char Plotter::getMicroStep(){
     return microStep;
 }
-void setLimitDist( int dist );
-void setTimeStep( int time );
+void Plotter::setLimitDist( int dist ){
+    limitDist = dist;
+}
+char Plotter::getLimitDist(){
+    return limitDist;
+}
+void Plotter::setTimeStep( int time ){
+    timeStep = time;
+}
+char Plotter::getTimeStep(){
+    return timeStep;
+}
