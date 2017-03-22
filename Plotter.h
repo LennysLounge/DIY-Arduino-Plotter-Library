@@ -19,14 +19,23 @@ class Plotter{
         void setMaxMicroStep( unsigned char step );
         void setLimitDist( int dist );
         void setTimeStep( int time );
+        void setAnalogLimit( bool b );
 
         char getMicroStep();
         char getMaxMicroStep();
         char getLimitDist();
         char getTimeStep();
+        bool getAnalogLimit();
 
+        void init();
         void update();
     private:
+        void findLimit();
+        bool isLimit( char pinLimit );
+        void setMicroStepPin( char step );
+        void setDir( char pin, bool dir );
+        void step( char pin );
+        void clearLimit( char st, char pinDir, char dir );
         char pinToolDir, pinToolStep, pinToolM0, pinToolM1;
         char pinTableDir, pinTableStep, pinTableM0, pinTableM1;
         char pinToolLimit0, pinToolLimit1;
@@ -37,6 +46,10 @@ class Plotter{
         unsigned long timeStep;
         unsigned long time;
         unsigned long lastTimeStep;
+        bool analogLimit;
+        String gcodeString;
+        bool tableDir;
+        bool toolDir;
 };
 
 #endif
